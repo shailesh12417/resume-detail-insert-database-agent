@@ -1,0 +1,231 @@
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+
+<title>AI Resume Parser</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:40px;
+background:#f4f4f4;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:8px;
+width:700px;
+margin:auto;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+button{
+padding:10px 20px;
+border:none;
+background:#007bff;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+.result{
+margin-top:20px;
+background:#fafafa;
+padding:15px;
+border-radius:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>AI Resume Parser</h2>
+
+<h3>Upload Resume</h3>
+
+<input type="file" id="resumeFile">
+<br><br>
+
+<button onclick="uploadResume()">Upload Resume</button>
+
+<div id="uploadResult" class="result"></div>
+
+<hr>
+
+<h3>Search Candidates</h3>
+
+<input type="text" id="searchQuery" placeholder="Search by skills">
+
+<button onclick="searchCandidate()">Search</button>
+
+<div id="searchResult" class="result"></div>
+
+</div>
+
+
+<script>
+
+async function uploadResume(){
+
+let fileInput = document.getElementById("resumeFile")
+
+let file = fileInput.files[0]
+
+if(!file){
+
+alert("Please select file")
+
+return
+
+}
+
+let formData = new FormData()
+
+formData.append("file",file)
+
+let response = await fetch("http://127.0.0.1:8000/api/upload/",{
+
+method:"POST",
+
+body:formData
+
+})
+
+let data = await response.json()
+
+document.getElementById("uploadResult").innerHTML = 
+"<pre>"+JSON.stringify(data,null,2)+"</pre>"
+
+}
+
+
+
+async function searchCandidate(){
+
+let query = document.getElementById("searchQuery").value
+
+let response = await fetch("http://127.0.0.1:8000/api/search/",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+query:query
+})
+
+})
+
+let data = await response.json()
+
+document.getElementById("searchResult").innerHTML =
+"<pre>"+JSON.stringify(data,null,2)+"</pre>"
+
+}
+
+</script>
+
+</body>
+
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AI Resume Parser</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:40px;
+background:#f4f4f4;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:8px;
+width:700px;
+margin:auto;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+button{
+padding:10px 20px;
+border:none;
+background:#007bff;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+input{
+padding:8px;
+width:100%;
+margin-top:10px;
+margin-bottom:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>AI Resume Parser</h2>
+
+<!-- Upload Resume -->
+
+<h3>Upload Resume</h3>
+
+<form action="/upload/" method="POST" enctype="multipart/form-data">
+    
+    {% csrf_token %}
+
+    <input type="file" name="files" multiple accept="application/pdf">
+
+    <br><br>
+
+    <button type="submit">Upload Resumes</button>
+
+</form>
+
+<hr>
+
+<!-- Search Candidates -->
+
+<h3>Search Candidates</h3>
+
+<form action="/search/" method="GET">
+
+<input type="text" name="query" placeholder="Search by skills or experience" required>
+
+<button type="submit">Search</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Resume Results</title>
+
+<style>
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+background:#f4f6f9;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+text-align:center;
+color:#333;
+margin-bottom:30px;
+}
+
+.card{
+background:#fafafa;
+border:1px solid #e3e3e3;
+border-radius:8px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.label{
+font-weight:bold;
+color:#555;
+}
+
+.value{
+margin-top:5px;
+color:#222;
+}
+
+.skills{
+background:#eef4ff;
+padding:10px;
+border-radius:6px;
+margin-top:5px;
+}
+
+.btn{
+display:inline-block;
+margin-top:25px;
+padding:12px 20px;
+background:#007bff;
+color:white;
+text-decoration:none;
+border-radius:6px;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#0056b3;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Extracted Candidate Information</h2>
+
+{% if data %}
+
+{% for candidate in data %}
+
+<div class="card">
+
+<div class="label">Name</div>
+<div class="value">{{ candidate.name }}</div>
+
+<br>
+
+<div class="label">Email</div>
+<div class="value">{{ candidate.email }}</div>
+
+<br>
+
+<div class="label">Phone</div>
+<div class="value">{{ candidate.phone }}</div>
+
+<br>
+
+<div class="label">GitHub</div>
+<div class="value">{{ candidate.github }}</div>
+
+<br>
+
+<div class="label">LinkedIn</div>
+<div class="value">{{ candidate.linkedin }}</div>
+
+<br>
+
+<div class="label">Skills</div>
+<div class="skills">{{ candidate.skills }}</div>
+
+<br>
+
+<div class="label">Experience</div>
+<div class="value">{{ candidate.experience }}</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p>No resume data found.</p>
+
+{% endif %}
+
+<a class="btn" href="/">Upload More Resumes</a>
+
+</div>
+
+</body>
+
+</html>
