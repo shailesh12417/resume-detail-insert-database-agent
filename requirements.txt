@@ -8,4 +8,15 @@ langchain-groq
 chromadb
 sentence-transformers
 python-dotenv
+pypdf
 gunicorn
+Django
+gunicorn
+python-dotenv
+mysqlclient
+langchain
+langchain-community
+langchain-groq
+chromadb
+sentence-transformers
+pypdf
